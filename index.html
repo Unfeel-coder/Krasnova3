@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Заполнение полиса ипотечного страхования</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Заполнение полиса ипотечного страхования</h1>
+  <form id="policy-form">
+    <label for="name">ФИО:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="passport-number">Номер паспорта:</label>
+    <input type="text" id="passport-number" name="passport-number" required>
+
+    <label for="address">Адрес объекта:</label>
+    <input type="text" id="address" name="address" required>
+
+    <label for="mortgage-balance">Оставшаяся сумма ипотеки:</label>
+    <input type="number" id="mortgage-balance" name="mortgage-balance" required>
+
+    <label for="property-type">Тип жилья:</label>
+    <select id="property-type" name="property-type">
+      <option value="квартира">Квартира</option>
+      <option value="дом">Дом</option>
+    </select>
+
+    <label for="gender">Пол страхователя:</label>
+    <select id="gender" name="gender">
+      <option value="мужчина">Мужчина</option>
+      <option value="женщина">Женщина</option>
+    </select>
+
+    <input type="submit" value="Сохранить">
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>
