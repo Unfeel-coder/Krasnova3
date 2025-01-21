@@ -1,52 +1,43 @@
-function calculate() {
-  const baseRate = parseFloat(document.querySelector('#base-rate').value);
-  const propertyType = document.querySelector('#property-type').value;
-  const propertyCondition = document.querySelector('#property-condition').value;
-  const propertyAge = parseFloat(document.querySelector('#property-age').value);
-  const borrowerAge = parseFloat(document.querySelector('#borrower-age').value);
-  const borrowerGender = document.querySelector('#borrower-gender').value;
-
-  let coefficient = 1;
-
-  // Тип имущества
-  if (propertyType === 'квартира') {
-    coefficient *= 1;
-  } else if (propertyType === 'дом') {
-    coefficient *= 1;
-  }
-
-  // Состояние имущества
-  if (propertyCondition === 'новостройка') {
-    coefficient *= 0.7;
-  } else if (propertyCondition === 'вторичный-фонд') {
-    if (propertyAge >= 25 && propertyAge <= 35) {
-      coefficient *= 1;
-    } else if (propertyAge >= 36 && propertyAge <= 50) {
-      coefficient *= 1.1;
-    } else if (propertyAge >= 51) {
-      coefficient *= 1.2;
-    }
-  }
-
-  // Возраст заемщика
-  if (borrowerAge >= 18 && borrowerAge <= 45) {
-    coefficient *= 0.7;
-  } else if (borrowerAge >= 46 && borrowerAge <= 55) {
-    coefficient *= 1;
-  } else if (borrowerAge >= 56 && borrowerAge <= 70) {
-    coefficient *= 1.1;
-  } else if (borrowerAge >= 71) {
-    coefficient *= 1.2;
-  }
-
-  // Пол заемщика
-  if (borrowerGender === 'мужчина') {
-    coefficient *= 1.1;
-  } else if (borrowerGender === 'женщина') {
-    coefficient *= 1;
-  }
-
-  const result = baseRate * coefficient;
-
-  document.querySelector('#result').innerHTML = Ⓝ<p><b>Стоимость ипотечного страхования: ${result.toFixed(2)} рублей</b></p>Ⓝ;
-}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Расчет ипотечного страхования</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <h1>Расчет ипотечного страхования</h1>
+  <form>
+    <label for="base-rate">Базовая ставка:</label>
+    <input type="number" id="base-rate" value="10000">
+    <br>
+    <label for="property-type">Тип недвижимости:</label>
+    <select id="property-type">
+      <option value="квартира">Квартира</option>
+      <option value="дом">Дом</option>
+    </select>
+    <br>
+    <label for="property-condition">Состояние недвижимости:</label>
+    <select id="property-condition">
+      <option value="новостройка">Новостройка</option>
+      <option value="вторичный-фонд">Вторичный фонд</option>
+    </select>
+    <br>
+    <label for="property-age">Возраст постройки (для вторичного фонда):</label>
+    <input type="number" id="property-age">
+    <br>
+    <label for="borrower-age">Возраст заемщика:</label>
+    <input type="number" id="borrower-age">
+    <br>
+    <label for="borrower-gender">Пол заемщика:</label>
+    <select id="borrower-gender">
+      <option value="мужчина">Мужчина</option>
+      <option value="женщина">Женщина</option>
+    </select>
+    <br>
+    <input type="button" value="Рассчитать" onclick="calculate()">
+  </form>
+  <br>
+  <div id="result"></div>
+</body>
+</html>
