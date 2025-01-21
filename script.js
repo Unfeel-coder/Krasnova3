@@ -2,18 +2,6 @@ const contractDateInput = document.getElementById("contract-date");
 const incidentDateInput = document.getElementById("incident-date");
 const submitButton = document.getElementById("submit-button");
 
-contractDateInput.addEventListener("change", () => {
-  const contractDate = new Date(contractDateInput.value);
-
-  // Установить минимальную допустимую дату для даты страхового случая
-  const minIncidentDate = new Date(contractDate);
-  incidentDateInput.min = minIncidentDate.toISOString().slice(0, 10);
-
-  // Установить максимальную допустимую дату для даты страхового случая (один год после даты договора)
-const contractDateInput = document.getElementById("contract-date");
-const incidentDateInput = document.getElementById("incident-date");
-const submitButton = document.getElementById("submit-button");
-
 const oneDayInMilliseconds = 86400000;
 const oneYearInMilliseconds = 31557600000;
 
@@ -27,6 +15,3 @@ submitButton.addEventListener("click", () => {
     console.log("Страховой случай проверен");
   }
 });
-
-
-
