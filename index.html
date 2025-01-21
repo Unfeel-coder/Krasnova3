@@ -1,97 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Полис ипотечного страхования</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Калькулятор ипотечного страхования</title>
 </head>
 <body>
-  <h1>Заполнение полиса ипотечного страхования</h1>
-  <form id="form">
-    <div>
-      <label for="name">ФИО</label>
-      <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-      <h2>Паспортные данные</h2>
-      <div>
-        <label for="passportSeries">Серия</label>
-        <input type="text" id="passportSeries" name="passportSeries" required>
-      </div>
-      <div>
-        <label for="passportNumber">Номер</label>
-        <input type="text" id="passportNumber" name="passportNumber" required>
-      </div>
-      <div>
-        <label for="passportIssuedBy">Кем выдан</label>
-        <input type="text" id="passportIssuedBy" name="passportIssuedBy" required>
-      </div>
-      <div>
-        <label for="passportIssuedDate">Когда выдан</label>
-        <input type="date" id="passportIssuedDate" name="passportIssuedDate" required>
-      </div>
-    </div>
-    <div>
-      <label for="birthDate">Дата рождения</label>
-      <input type="date" id="birthDate" name="birthDate" required>
-    </div>
-    <div>
-      <label for="address">Адрес объекта</label>
-      <input type="text" id="address" name="address" required>
-    </div>
-    <div>
-      <label for="remainingMortgageSum">Оставшаяся сумма ипотеки</label>
-      <input type="number" id="remainingMortgageSum" name="remainingMortgageSum" required>
-    </div>
-    <div>
-      <label for="housingType">Тип жилья</label>
-      <select id="housingType" name="housingType" required>
-        <option value="apartment">Квартира</option>
-        <option value="house">Дом</option>
-      </select>
-    </div>
-    <div>
-      <label for="cadastralNumber">Кадастровый номер</label>
-      <input type="text" id="cadastralNumber" name="cadastralNumber" required>
-    </div>
-    <div>
-      <label for="gender">Пол страхователя</label>
-      <select id="gender" name="gender" required>
-        <option value="male">Мужчина</option>
-        <option value="female">Женщина</option>
-      </select>
-    </div>
-    <h2 id="calculation">Расчет суммы страхования</h2>
-    <div>
-      <label for="mortgageCreditSum">Сумма ипотечного кредита</label>
-      <input type="number" id="mortgageCreditSum" name="mortgageCreditSum" required>
-    </div>
-    <div id="coefficients">
-      <p>Коэффициенты:</p>
-      <ul>
-        <li>Оставшаяся сумма кредита:</li>
-        <ul>
-          <li><= 1 000 000: 0,9</li>
-          <li>1 000 001 - 2 000 000: 1</li>
-          <li>2 000 001 - 4 000 000: 1,2</li>
-          <li>> 4 000 001: 1,4</li>
-        </ul>
-        <li>Срок погашения кредита:</li>
-        <ul>
-          <li><= 5 лет: 0,9</li>
-          <li>6 - 8 лет: 1</li>
-          <li>9 - 15 лет: 1,2</li>
-          <li>16 - 20 лет: 1,4</li>
-          <li>> 21 год: 1,5</li>
-        </ul>
-      </ul>
-    </div>
-    <div>
-      <button type="submit" id="submit-button">Подпись</button>
-    </div>
+  <h1>Калькулятор ипотечного страхования</h1>
+  <form>
+    <label for="property_type">Тип имущества:</label>
+    <select id="property_type">
+      <option value="квартира">Квартира</option>
+      <option value="дом">Дом</option>
+    </select>
+    <br>
+    <label for="property_condition">Состояние имущества:</label>
+    <select id="property_condition">
+      <option value="новостройка">Новостройка</option>
+      <option value="вторичный_фонд">Вторичный фонд</option>
+    </select>
+    <br>
+    <label for="property_age">Возраст постройки (если вторичный фонд):</label>
+    <select id="property_age">
+      <option value="25-35">от 25 до 35</option>
+      <option value="36-50">от 36 до 50</option>
+      <option value="51+">от 51</option>
+    </select>
+    <br>
+    <label for="borrower_age">Возраст заемщика:</label>
+    <select id="borrower_age">
+      <option value="18-45">от 18 лет до 45</option>
+      <option value="46-55">от 46 до 55</option>
+      <option value="56-70">от 56 до 70</option>
+      <option value="71+">от 71</option>
+    </select>
+    <br>
+    <label for="borrower_gender">Пол заемщика:</label>
+    <select id="borrower_gender">
+      <option value="мужчина">Мужчина</option>
+      <option value="женщина">Женщина</option>
+    </select>
+    <br>
+    <input type="submit" value="Рассчитать">
   </form>
-  <div id="results"></div>
-
-  <script src="script.js"></script>
+  <br>
+  <div id="result"></div>
 </body>
 </html>
