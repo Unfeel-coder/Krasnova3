@@ -236,7 +236,7 @@
   </div>
   <div>
     <label for="incident-date">Дата страхового случая:</label>
-    <input type="date" id="incident-date">
+    <input type="date" id="incident-date" onchange="checkDate()">
   </div>
   <div>
     <button type="button" id="submit-button">Проверить</button>
@@ -244,29 +244,28 @@
 </form>
 
 <script>
-const contractDateInput = document.getElementById("contract-date");
-const incidentDateInput = document.getElementById("incident-date");
+  function checkDate() {
+    const contractDate = new Date(document.getElementById("contract-date").value);
+    const incidentDate = new Date(document.getElementById("incident-date").value);
 
+    // Проверяем, является ли дата страхового случая раньше даты договора
+    if (incidentDate < contractDate) {
+      alert("Срок полиса не вступил в силу, проверьте правильность заполнения даты");
+      return;
+    }
 
-const oneDayInMilliseconds = 86400000;
-const oneYearInMilliseconds = 31557600000;
+    // Проверяем, является ли дата страхового случая позже даты договора на срок более года
+    const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
+    if (yearDifference > 1) {
+      alert("Срок полиса истек, проверьте правильность заполнения даты");
+      return;
+    }
 
-let contractDate;
-let incidentDate;
-
-submitButton.addEventListener("click", () => {
-  contractDate = new Date(contractDateInput.value);
-  incidentDate = new Date(incidentDateInput.value);
-
-  if (incidentDate < new Date(contractDate.getTime() + oneDayInMilliseconds) || incidentDate > new Date(contractDate.getTime() + oneYearInMilliseconds)) {
-    console.log("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
-  } else {
-    console.log("Страховой случай проверен");
+    // Если данные корректны, включаем кнопку "Проверить"
+    document.getElementById("submit-button").disabled = false;
+    alert("Страховой полис проверен");
   }
-});
-
 </script>
-
 
 </div>
     <label for="name">ФИО:</label>
