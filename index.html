@@ -226,47 +226,20 @@
 <body>
   <h1>Сообщите нам о страховом случае</h1>
   <form>
-<div>
-  <label for="contract-date">Дата договора:</label>
-  <input type="date" id="contract-date">
-<div>
-  <label for="contract-number">Номер договора:</label>
-  <input type="text" id="contract-number">
-</div>
-    <div>
-  <label for="incident-date">Дата страхового случая:</label>
-  <input type="date" id="incident-date">
-</div>
-<script>
-const contractDateInput = document.getElementById("contract-date");
-const incidentDateInput = document.getElementById("incident-date");
-
-contractDateInput.addEventListener("change", () => {
-  const contractDate = new Date(contractDateInput.value);
-
-  // Установить минимальную допустимую дату для даты страхового случая
-  const minIncidentDate = new Date(contractDate);
-  incidentDateInput.min = minIncidentDate.toISOString().slice(0, 10);
-
-  // Установить максимальную допустимую дату для даты страхового случая (один год после даты договора)
-  const maxIncidentDate = new Date(contractDate);
-  maxIncidentDate.setFullYear(maxIncidentDate.getFullYear() + 1);
-  incidentDateInput.max = maxIncidentDate.toISOString().slice(0, 10);
-
-  // Проверить, соблюдены ли временные сроки
-  const incidentDate = new Date(incidentDateInput.value);
-  if (incidentDate < minIncidentDate || incidentDate > maxIncidentDate) {
-    incidentDateInput.setCustomValidity("Временные сроки не соблюдены");
-  } else {
-    incidentDateInput.setCustomValidity("");
-  }
-});
-
-incidentDateInput.addEventListener("invalid", () => {
-  alert(incidentDateInput.validationMessage);
-});
-</script>
-
+<form>
+  <div>
+    <label for="contract-date">Дата договора:</label>
+    <input type="date" id="contract-date" required>
+  <div>
+    <label for="contract-number">Номер договора:</label>
+    <input type="text" id="contract-number" required>
+  </div>
+      <div>
+    <label for="incident-date">Дата страхового случая:</label>
+    <input type="date" id="incident-date" required min="[contract-date]" max="[contract-date+1y]">
+  </div>
+  <input type="submit" value="Отправить">
+</form>
 
 </div>
     <label for="name">ФИО:</label>
