@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Расчет ипотечного страхования</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="script.js"></script>
+  <title>Калькулятор ипотечного страхования</title>
 </head>
 <body>
-  <h1>Расчет ипотечного страхования</h1>
+  <h1>Калькулятор ипотечного страхования</h1>
   <form>
-    <label for="base-rate">Базовая ставка:</label>
-    <input type="number" id="base-rate" value="10000">
+    <label for="loan-amount">Сумма кредита:</label>
+    <input type="number" id="loan-amount">
     <br>
-    <label for="property-type">Тип недвижимости:</label>
+    <label for="property-type">Тип имущества:</label>
     <select id="property-type">
       <option value="квартира">Квартира</option>
       <option value="дом">Дом</option>
     </select>
     <br>
-    <label for="property-condition">Состояние недвижимости:</label>
+    <label for="property-condition">Состояние имущества:</label>
     <select id="property-condition">
       <option value="новостройка">Новостройка</option>
       <option value="вторичный-фонд">Вторичный фонд</option>
     </select>
     <br>
     <label for="property-age">Возраст постройки (для вторичного фонда):</label>
-    <input type="number" id="property-age">
+    <select id="property-age">
+      <option value="25-35">от 25 до 35</option>
+      <option value="36-50">от 36 до 50</option>
+      <option value="51+">от 51</option>
+    </select>
     <br>
     <label for="borrower-age">Возраст заемщика:</label>
     <input type="number" id="borrower-age">
@@ -35,7 +37,7 @@
       <option value="женщина">Женщина</option>
     </select>
     <br>
-    <input type="button" value="Рассчитать" onclick="calculate()">
+    <input type="submit" value="Рассчитать">
   </form>
   <br>
   <div id="result"></div>
