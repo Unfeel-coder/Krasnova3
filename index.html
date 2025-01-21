@@ -258,7 +258,7 @@ function checkDate() {
 
   // Проверяем, является ли дата страхового случая позже даты договора на срок более года
   const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
-  if (yearDifference > 1) {
+  if (yearDifference > 1 || (yearDifference === 1 && incidentDate.getMonth() > contractDate.getMonth())) {
     document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
     return;
   }
@@ -266,6 +266,7 @@ function checkDate() {
   // Если данные корректны, выводим сообщение "Полис проверен"
   document.getElementById("result").innerHTML = "Полис проверен";
 }
+
 
 </script>
 
