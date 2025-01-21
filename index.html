@@ -256,13 +256,13 @@
     const incidentDate = new Date(incidentDateInput.value);
 
     if (incidentDate < new Date(contractDate.getTime() + oneDayInMilliseconds) || incidentDate > new Date(contractDate.getTime() + oneYearInMilliseconds)) {
-      alert("Дата страхового случая должна быть не меньше на один день и не больше на один год даты договора");
+      alert("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
     } else {
-      // Здесь можно добавить код для проверки страхового случая по номеру договора и дате
       alert("Страховой случай проверен");
     }
   });
 </script>
+
 </div>
     <label for="name">ФИО:</label>
     <input type="text" id="name">
