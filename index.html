@@ -227,24 +227,23 @@
   <h1>Сообщите нам о страховом случае</h1>
 <form>
   <div>
-    <label for="contract-date">Дата договора:</label>
-    <input type="date" id="contract-date">
-  </div>
-  <div>
-    <label for="contract-number">Номер договора:</label>
-    <input type="text" id="contract-number">
-  </div>
-  <div>
-    <label for="incident-date">Дата страхового случая:</label>
-    <input type="date" id="incident-date" onchange="checkDate()">
-  </div>
-  <div>
-   <button type="button" id="submit-button">Проверить</button>
-  </div>
-</form>
-<!DOCTYPE html>
-<html>
-<head>
+<label for="contract-date">Дата договора:</label>
+      <input type="date" id="contract-date">
+    </div>
+    <div>
+      <label for="contract-number">Номер договора:</label>
+      <input type="text" id="contract-number">
+    </div>
+    <div>
+      <label for="incident-date">Дата страхового случая:</label>
+      <input type="date" id="incident-date" onchange="checkDate()">
+    </div>
+    <div>
+      <button type="button" id="submit-button">Проверить</button>
+    </div>
+  </form>
+  <div id="result"></div>
+
   <script>
     function checkDate() {
       const contractDate = new Date(document.getElementById("contract-date").value);
