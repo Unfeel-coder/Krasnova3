@@ -175,6 +175,53 @@
   </script>
 </body>
 </html>
+<!-- Существующий код HTML -->
+
+<!-- Новые строки -->
+<div>
+  <label for="contract-date">Дата договора:</label>
+  <input type="date" id="contract-date">
+</div>
+<div>
+  <label for="contract-number">Номер договора:</label>
+  <input type="text" id="contract-number">
+</div>
+<div>
+  <label for="policy-end-date">Дата окончания полиса:</label>
+  <input type="date" id="policy-end-date">
+</div>
+<div>
+  <label for="incident-date">Дата страхового случая:</label>
+  <input type="date" id="incident-date">
+</div>
+
+<!-- Кнопка "Подписать" -->
+<button type="button" onclick="generateContractInfo()">Подписать</button>
+
+<!-- Скрипт для генерации данных договора при нажатии кнопки -->
+<script>
+  function generateContractInfo() {
+    // Получение текущей даты
+    const today = new Date();
+
+    // Генерация даты договора
+    const contractDate = today.toISOString().split('T')[0];
+    document.getElementById('contract-date').value = contractDate;
+
+    // Генерация номера договора (случайным образом)
+    const contractNumber = Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('contract-number').value = contractNumber;
+
+    // Генерация даты окончания полиса (через год после даты договора)
+    const policyEndDate = new Date(today.setFullYear(today.getFullYear() + 1));
+    document.getElementById('policy-end-date').value = policyEndDate.toISOString().split('T')[0];
+
+    // Генерация даты страхового случая (случайным образом в течение года после даты договора)
+    const incidentDate = new Date(contractDate);
+    incidentDate.setDate(contractDate.getDate() + Math.floor(Math.random() * 365));
+    document.getElementById('incident-date').value = incidentDate.toISOString().split('T')[0];
+  }
+</script>
 
 <html>
 <head>
