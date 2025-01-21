@@ -10,23 +10,22 @@ contractDateInput.addEventListener("change", () => {
   incidentDateInput.min = minIncidentDate.toISOString().slice(0, 10);
 
   // Установить максимальную допустимую дату для даты страхового случая (один год после даты договора)
-  const maxIncidentDate = new Date(contractDate);
-  maxIncidentDate.setFullYear(maxIncidentDate.getFullYear() + 1);
-  incidentDateInput.max = maxIncidentDate.toISOString().slice(0, 10);
-});
+const contractDateInput = document.getElementById("contract-date");
+const incidentDateInput = document.getElementById("incident-date");
+const submitButton = document.getElementById("submit-button");
 
-submitButton.addEventListener("click", (event) => {
-  event.preventDefault(); // Отменить отправку формы по умолчанию
+const oneDayInMilliseconds = 86400000;
+const oneYearInMilliseconds = 31557600000;
 
-  const incidentDate = new Date(incidentDateInput.value);
+submitButton.addEventListener("click", () => {
   const contractDate = new Date(contractDateInput.value);
+  const incidentDate = new Date(incidentDateInput.value);
 
-  // Проверить, соблюдены ли временные сроки
-  if (incidentDate < contractDate || incidentDate > maxIncidentDate) {
-    alert("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
+  if (incidentDate < new Date(contractDate.getTime() + oneDayInMilliseconds) || incidentDate > new Date(contractDate.getTime() + oneYearInMilliseconds)) {
+    console.log("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
   } else {
-    // Выполнить действия по отправке формы (например, отправить данные на сервер)
-    alert("Форма отправлена");
+    console.log("Страховой случай проверен");
   }
 });
+
 
