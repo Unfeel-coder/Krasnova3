@@ -271,7 +271,34 @@
 
       // Если все проверки пройдены, выводим сообщение "Страховой полис проверен"
       document.getElementById("result").innerHTML = "Страховой полис проверен";
-    }
+    }function checkDate() {
+  const contractDate = new Date(document.getElementById("contract-date").value);
+  const incidentDate = new Date(document.getElementById("incident-date").value);
+
+  // Проверяем, является ли дата страхового случая раньше даты договора
+  if (incidentDate < contractDate) {
+    document.getElementById("result").innerHTML = "Срок полиса не вступил в силу, проверьте правильность заполнения даты";
+    return;
+  }
+
+  // Проверяем, является ли дата страхового случая позже даты договора на срок более года
+  const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
+  if (yearDifference > 1) {
+    document.getElementById("result").innerHTML = "Срок полиса истек, проверьте правильность заполнения даты";
+    return;
+  }
+
+  // Проверяем, является ли дата страхового случая в пределах срока действия договора
+  const daysDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24));
+  if (daysDifference > 365) {
+    document.getElementById("result").innerHTML = "Срок полиса истек, проверьте правильность заполнения даты";
+    return;
+  }
+
+  // Если все проверки пройдены, выводим сообщение "Страховой полис проверен"
+  document.getElementById("result").innerHTML = "Страховой полис проверен";
+}
+
   </script>
 </body>
 </html>
