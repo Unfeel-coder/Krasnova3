@@ -258,18 +258,19 @@ contractDateInput.addEventListener("change", () => {
 });
 
 submitButton.addEventListener("click", (event) => {
+  event.preventDefault(); // Отменить отправку формы
+
   const incidentDate = new Date(incidentDateInput.value);
   const contractDate = new Date(contractDateInput.value);
 
   // Проверить, соблюдены ли временные сроки
   if (incidentDate < contractDate || incidentDate > maxIncidentDate) {
-    event.preventDefault(); // Отменить отправку формы
     alert("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
+  } else {
+    // Выполнить действия по отправке формы (например, отправить данные на сервер)
   }
 });
 </script>
-
-
 
 </div>
     <label for="name">ФИО:</label>
