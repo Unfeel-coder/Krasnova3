@@ -288,15 +288,8 @@ function checkDate() {
     return;
   }
 
-  // Проверяем, является ли дата страхового случая в пределах срока действия договора
-  const daysDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24));
-  if (daysDifference > 365) {
-    document.getElementById("result").innerHTML = "Срок полиса истек, проверьте правильность заполнения даты";
-    return;
-  }
-
-  // Если все проверки пройдены, выводим сообщение "Страховой полис проверен"
-  document.getElementById("result").innerHTML = "Страховой полис в силе";
+  // Если данные корректны, выводим сообщение "Страховой полис проверен"
+  document.getElementById("result").innerHTML = "Страховой полис проверен";
 }
 
   </script>
