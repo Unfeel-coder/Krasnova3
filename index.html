@@ -238,9 +238,11 @@
   <label for="incident-date">Дата страхового случая:</label>
   <input type="date" id="incident-date">
 </div>
+<button type="submit" id="submit-button">Отправить</button>
 <script>
 const contractDateInput = document.getElementById("contract-date");
 const incidentDateInput = document.getElementById("incident-date");
+const submitButton = document.getElementById("submit-button");
 
 contractDateInput.addEventListener("change", () => {
   const contractDate = new Date(contractDateInput.value);
@@ -253,20 +255,20 @@ contractDateInput.addEventListener("change", () => {
   const maxIncidentDate = new Date(contractDate);
   maxIncidentDate.setFullYear(maxIncidentDate.getFullYear() + 1);
   incidentDateInput.max = maxIncidentDate.toISOString().slice(0, 10);
+});
+
+submitButton.addEventListener("click", (event) => {
+  const incidentDate = new Date(incidentDateInput.value);
+  const contractDate = new Date(contractDateInput.value);
 
   // Проверить, соблюдены ли временные сроки
-  const incidentDate = new Date(incidentDateInput.value);
-  if (incidentDate < minIncidentDate || incidentDate > maxIncidentDate) {
-    incidentDateInput.setCustomValidity("Временные сроки не соблюдены");
-  } else {
-    incidentDateInput.setCustomValidity("");
+  if (incidentDate < contractDate || incidentDate > maxIncidentDate) {
+    event.preventDefault(); // Отменить отправку формы
+    alert("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
   }
 });
-
-incidentDateInput.addEventListener("invalid", () => {
-  alert(incidentDateInput.validationMessage);
-});
 </script>
+
 
 
 </div>
