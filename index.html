@@ -226,7 +226,7 @@
 <body>
   <h1>Сообщите нам о страховом случае</h1>
   <form>
-  <div>
+<div>
   <label for="contract-date">Дата договора:</label>
   <input type="date" id="contract-date">
 <div>
@@ -252,6 +252,12 @@ contractDateInput.addEventListener("change", () => {
   const maxIncidentDate = new Date(contractDate);
   maxIncidentDate.setFullYear(maxIncidentDate.getFullYear() + 1);
   incidentDateInput.max = maxIncidentDate.toISOString().slice(0, 10);
+
+  // Проверить, соблюдены ли временные сроки
+  const incidentDate = new Date(incidentDateInput.value);
+  if (incidentDate < minIncidentDate || incidentDate > maxIncidentDate) {
+    alert("Временные сроки не соблюдены");
+  }
 });
 </script>
 
