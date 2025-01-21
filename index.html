@@ -242,32 +242,52 @@
    <button type="button" id="submit-button">Проверить</button>
   </div>
 </form>
-<script>
-<script>
-  document.getElementById("submit-button").addEventListener("click", checkDate);
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    function checkDate() {
+      const contractDate = new Date(document.getElementById("contract-date").value);
+      const incidentDate = new Date(document.getElementById("incident-date").value);
 
-  function checkDate() {
-    const contractDate = new Date(document.getElementById("contract-date").value);
-    const incidentDate = new Date(document.getElementById("incident-date").value);
+      // Проверяем, является ли дата страхового случая раньше даты договора
+      if (incidentDate < contractDate) {
+        document.getElementById("result").innerHTML = "Срок полиса не вступил в силу, проверьте правильность заполнения даты";
+        return;
+      }
 
-    // Проверяем, является ли дата страхового случая раньше даты договора
-    if (incidentDate < contractDate) {
-      alert("Срок полиса не вступил в силу, проверьте правильность заполнения даты");
-      return;
+      // Проверяем, является ли дата страхового случая позже даты договора на срок более года
+      const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
+      if (yearDifference > 1) {
+        document.getElementById("result").innerHTML = "Срок полиса истек, проверьте правильность заполнения даты";
+        return;
+      }
+
+      // Если данные корректны, выводим сообщение "Страховой полис проверен"
+      document.getElementById("result").innerHTML = "Страховой полис проверен";
     }
-
-    // Проверяем, является ли дата страхового случая позже даты договора на срок более года
-    const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
-    if (yearDifference > 1) {
-      alert("Срок полиса истек, проверьте правильность заполнения даты");
-      return;
-    }
-
-    // Если данные корректны, выводим сообщение "Страховой полис проверен"
-    alert("Страховой полис проверен");
-  }
-</script>
-
+  </script>
+</head>
+<body>
+  <form>
+    <div>
+      <label for="contract-date">Дата договора:</label>
+      <input type="date" id="contract-date">
+    </div>
+    <div>
+      <label for="contract-number">Номер договора:</label>
+      <input type="text" id="contract-number">
+    </div>
+    <div>
+      <label for="incident-date">Дата страхового случая:</label>
+      <input type="date" id="incident-date" onchange="checkDate()">
+    </div>
+    <div>
+      <button type="button" id="submit-button">Проверить</button>
+    </div>
+  </form>
+  <div id="result"></div>
+</body>
 </div>
     <label for="name">ФИО:</label>
     <input type="text" id="name">
