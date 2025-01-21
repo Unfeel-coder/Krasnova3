@@ -221,17 +221,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Проверка даты страхового случая</title>
-</head>
-<body>
-    <h1>Сообщите нам о страховом случае</h1>
-<form>
-<form>
-  <div>
-    <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Проверка полиса</title>
+  <title>Проверка страхового полиса</title>
 </head>
 <body>
   <h1>Проверка страхового полиса</h1>
@@ -262,7 +254,7 @@
 
       // Проверяем, является ли дата страхового случая раньше даты договора
       if (incidentDate < contractDate) {
-        document.getElementById("result").innerHTML = "Дата страхового случая не может быть раньше даты договора";
+        document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
         return;
       }
 
@@ -270,7 +262,7 @@
       const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
       const monthDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 30));
       if (yearDifference > 1 || (yearDifference === 1 && monthDifference > 12)) {
-        document.getElementById("result").innerHTML = "Дата страхового случая не может быть позже даты договора на срок более года";
+        document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
         return;
       }
 
