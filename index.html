@@ -256,10 +256,17 @@ contractDateInput.addEventListener("change", () => {
   // Проверить, соблюдены ли временные сроки
   const incidentDate = new Date(incidentDateInput.value);
   if (incidentDate < minIncidentDate || incidentDate > maxIncidentDate) {
-    alert("Временные сроки не соблюдены");
+    incidentDateInput.setCustomValidity("Временные сроки не соблюдены");
+  } else {
+    incidentDateInput.setCustomValidity("");
   }
 });
+
+incidentDateInput.addEventListener("invalid", () => {
+  alert(incidentDateInput.validationMessage);
+});
 </script>
+
 
 </div>
     <label for="name">ФИО:</label>
