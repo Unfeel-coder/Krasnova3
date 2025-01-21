@@ -1,46 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Калькулятор ипотечного страхования</title>
+  <title>Расчет ипотечного страхования</title>
 </head>
 <body>
-  <h1>Калькулятор ипотечного страхования</h1>
+  <h1>Расчет ипотечного страхования</h1>
   <form>
-    <label for="property_type">Тип имущества:</label>
-    <select id="property_type">
+    <label for="base-rate">Базовая ставка:</label>
+    <input type="number" id="base-rate" value="10000">
+    <br>
+    <label for="property-type">Тип имущества:</label>
+    <select id="property-type">
       <option value="квартира">Квартира</option>
       <option value="дом">Дом</option>
     </select>
     <br>
-    <label for="property_condition">Состояние имущества:</label>
-    <select id="property_condition">
+    <label for="property-condition">Состояние имущества:</label>
+    <select id="property-condition">
       <option value="новостройка">Новостройка</option>
-      <option value="вторичный_фонд">Вторичный фонд</option>
+      <option value="вторичный-фонд">Вторичный фонд</option>
     </select>
     <br>
-    <label for="property_age">Возраст постройки (если вторичный фонд):</label>
-    <select id="property_age">
-      <option value="25-35">от 25 до 35</option>
-      <option value="36-50">от 36 до 50</option>
-      <option value="51+">от 51</option>
-    </select>
+    <label for="property-age">Возраст постройки (для вторичного фонда):</label>
+    <input type="number" id="property-age">
     <br>
-    <label for="borrower_age">Возраст заемщика:</label>
-    <select id="borrower_age">
-      <option value="18-45">от 18 лет до 45</option>
-      <option value="46-55">от 46 до 55</option>
-      <option value="56-70">от 56 до 70</option>
-      <option value="71+">от 71</option>
-    </select>
+    <label for="borrower-age">Возраст заемщика:</label>
+    <input type="number" id="borrower-age">
     <br>
-    <label for="borrower_gender">Пол заемщика:</label>
-    <select id="borrower_gender">
+    <label for="borrower-gender">Пол заемщика:</label>
+    <select id="borrower-gender">
       <option value="мужчина">Мужчина</option>
       <option value="женщина">Женщина</option>
     </select>
-    <br>
-    <label for="loan_balance">Остаток кредита:</label>
-    <input type="number" id="loan_balance">
     <br>
     <input type="submit" value="Рассчитать">
   </form>
@@ -48,3 +39,62 @@
   <div id="result"></div>
 </body>
 </html>
+
+<script>
+  const form = document.querySelector('form');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const baseRate = parseFloat(document.querySelector('#base-rate').value);
+    const propertyType = document.querySelector('#property-type').value;
+    const propertyCondition = document.querySelector('#property-condition').value;
+    const propertyAge = parseFloat(document.querySelector('#property-age').value);
+    const borrowerAge = parseFloat(document.querySelector('#borrower-age').value);
+    const borrowerGender = document.querySelector('#borrower-gender').value;
+
+    let coefficient = 1;
+
+    // Тип имущества
+    if (propertyType === 'квартира') {
+      coefficient *= 1;
+    } else if (propertyType === 'дом') {
+      coefficient *= 1;
+    }
+
+    // Состояние имущества
+    if (propertyCondition === 'новостройка') {
+      coefficient *= 0.7;
+    } else if (propertyCondition === 'вторичный-фонд') {
+      if (propertyAge >= 25 && propertyAge <= 35) {
+        coefficient *= 1;
+      } else if (propertyAge >= 36 && propertyAge <= 50) {
+        coefficient *= 1.1;
+      } else if (propertyAge >= 51) {
+        coefficient *= 1.2;
+      }
+    }
+
+    // Возраст заемщика
+    if (borrowerAge >= 18 && borrowerAge <= 45) {
+      coefficient *= 0.7;
+    } else if (borrowerAge >= 46 && borrowerAge <= 55) {
+      coefficient *= 1;
+    } else if (borrowerAge >= 56 && borrowerAge <= 70) {
+      coefficient *= 1.1;
+    } else if (borrowerAge >= 71) {
+      coefficient *= 1.2;
+    }
+
+    // Пол заемщика
+    if (borrowerGender === 'мужчина') {
+      coefficient *= 1.1;
+    } else if (borrowerGender === 'женщина') {
+      coefficient *= 1;
+    }
+
+    const result = baseRate * coefficient;
+
+    document.querySelector('#result').innerHTML = ⓃСтоимость ипотечного страхования: ${result} рублейⓃ;
+  });
+</script>
