@@ -33,7 +33,7 @@
       <option value="женщина">Женщина</option>
     </select>
     <br>
-    <input type="submit" value="Рассчитать">
+    <input type="button" value="Рассчитать" onclick="calculate()">
   </form>
   <br>
   <div id="result"></div>
@@ -41,11 +41,7 @@
 </html>
 
 <script>
-  const form = document.querySelector('form');
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
+  function calculate() {
     const baseRate = parseFloat(document.querySelector('#base-rate').value);
     const propertyType = document.querySelector('#property-type').value;
     const propertyCondition = document.querySelector('#property-condition').value;
@@ -96,5 +92,5 @@
     const result = baseRate * coefficient;
 
     document.querySelector('#result').innerHTML = ⓃСтоимость ипотечного страхования: ${result} рублейⓃ;
-  });
+  }
 </script>
