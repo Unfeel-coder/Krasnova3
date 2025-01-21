@@ -1,3 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Полис ипотечного страхования</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Заполнение полиса ипотечного страхования</h1>
+  <form id="form">
+    <div>
+      <label for="name">ФИО</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+      <h2>Паспортные данные</h2>
+      <div>
+        <label for="passportSeries">Серия</label>
+        <input type="text" id="passportSeries" name="passportSeries" required>
+      </div>
+      <div>
+        <label for="passportNumber">Номер</label>
+        <input type="text" id="passportNumber" name="passportNumber" required>
+      </div>
+      <div>
+        <label for="passportIssuedBy">Кем выдан</label>
+        <input type="text" id="passportIssuedBy" name="passportIssuedBy" required>
+      </div>
+      <div>
+        <label for="passportIssuedDate">Когда выдан</label>
+        <input type="date" id="passportIssuedDate" name="passportIssuedDate" required>
+      </div>
+    </div>
+    <div>
+      <label for="birthDate">Дата рождения</label>
+      <input type="date" id="birthDate" name="birthDate" required>
+    </div>
+    <div>
+      <label for="address">Адрес объекта</label>
+      <input type="text" id="address" name="address" required>
+    </div>
+    <div>
+      <label for="remainingMortgageSum">Оставшаяся сумма ипотеки</label>
+      <input type="number" id="remainingMortgageSum" name="remainingMortgageSum" required>
+    </div>
+    <div>
+      <label for="termRepayment">Оставшийся срок кредита</label>
+      <input type="number" id="termRepayment" name="termRepayment" required>
+    </div>
+    <div>
+      <label for="housingType">Тип жилья</label>
+      <select id="housingType" name="housingType" required>
+        <option value="apartment">Квартира</option>
+        <option value="house">Дом</option>
+      </select>
+    </div>
+    <div>
+      <label for="cadastralNumber">Кадастровый номер</label>
+      <input type="text" id="cadastralNumber" name="cadastralNumber" required>
+    </div>
+    <div>
+      <label for="gender">Пол страхователя</label>
+      <select id="gender" name="gender" required>
+        <option value="male">Мужчина</option>
+        <option value="female">Женщина</option>
+      </select>
+        <div>
+      <button type="submit" id="submit-button">Подпись</button>
+    </div>
+  </form>
+    </div>
+    <h2 id="calculation">Расчет суммы страхования</h2>
+    <div>
+      <label for="insuranceSum">Сумма страхования</label>
+      <input type="number" id="insuranceSum" name="insuranceSum" disabled>
+    </div>
+    <div>
+      <label for="insurancePremium">Страховая премия</label>
+      <input type="number" id="insurancePremium" name="insurancePremium" disabled>
+    </div>
+  </form>
+  <script>
+    // Получение элементов формы
+    const form = document.getElementById('form');
+    const nameInput = document.getElementById('name');
+    const passportSeriesInput = document.getElementById('passportSeries');
+    const passportNumberInput = document.getElementById('passportNumber');
+    const passportIssuedByInput = document.getElementById('passportIssuedBy');
+    const passportIssuedDateInput = document.getElementById('passportIssuedDate');
+    const birthDateInput = document.getElementById('birthDate');
+    const addressInput = document.getElementById('address');
+    const remainingMortgageSumInput = document.getElementById('remainingMortgageSum');
+    const termRepaymentInput = document.getElementById('termRepayment');
+    const housingTypeSelect = document.getElementById('housingType');
+    const cadastralNumberInput = document.getElementById('cadastralNumber');
+    const genderSelect = document.getElementById('gender');
+    const submitButton = document.getElementById('submit-button');
+
+    // Получение элементов расчета
+    const insuranceSumInput = document.getElementById('insuranceSum');
+    const insurancePremiumInput = document.getElementById('insurancePremium');
+
+    //Обработчик события отправки формы
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Проверка на заполнение формы
+      if (!validateForm()) {
+        alert('Пожалуйста, заполните все поля формы.');
+        return;
+      }
+
+      // Получение данных из формы
+      const data = {
+        name: nameInput.value,
+        passportSeries: passportSeriesInput.value,
+        passportNumber: passportNumberInput.value,
+        passportIssuedBy: passportIssuedByInput.value,
+        passportIssuedDate: passportIssuedDateInput.value,
+        birthDate: birthDateInput.value,
+        address: addressInput.value,
+        remainingMortgageSum: remainingMortgageSumInput.value,
+        termRepayment: termRepaymentInput.value,
+        housingType: housingTypeSelect.value,
+        cadastralNumber: cadastralNumberInput.value,
+        gender: genderSelect.value
+      };
+
+      // Расчет суммы страхования
+      const insuranceSum = calculateInsuranceSum(data);
+      insuranceSumInput.value = insuranceSum;
+
+      // Расчет страховой премии
+      const insurancePremium = calculateInsurancePremium(data, insuranceSum);
+      insurancePremiumInput.value = insurancePremium;
+    });
+
+    // Функция проверки заполнения формы
+    function validateForm() {
+      return nameInput.value &&
+        passportSeriesInput.value &&
+        passportNumberInput.value &&
+        passportIssuedByInput.value &&
+        passportIssuedDateInput.value &&
+        birthDateInput.value &&
+        addressInput.value &&
+        remainingMortgageSumInput.value &&
+        termRepaymentInput.value &&
+        housingTypeSelect.value &&
+        cadastralNumberInput.value &&
+        genderSelect.value;
+    }
+
+    // Функция расчета суммы страхования
+    function calculateInsuranceSum(data) {
+      let sum = data.remainingMortgageSum;
+
+      if (data.housingType === 'house') {
+        sum *= 1.2;
+      }
+
+      return sum;
+    }
+
+    // Функция расчета страховой премии
+    function calculateInsurancePremium(data, insuranceSum) {
+      let premium = insuranceSum * 0.009;
+
+      if (data.gender === 'female') {
+        premium *= 0.9;
+      }
+
+      return premium;
+    }
+  </script>
+</body>
+</html>
+<!-- Существующий код HTML -->
+
+<!-- Новые строки -->
+<div>
+  <label for="contract-date">Дата договора:</label>
+  <input type="date" id="contract-date">
+</div>
+<div>
+  <label for="contract-number">Номер договора:</label>
+  <input type="text" id="contract-number">
+</div>
+<div>
+  <label for="policy-end-date">Дата окончания полиса:</label>
+  <input type="date" id="policy-end-date">
+</div>
+
+<!-- Кнопка "Подписать" -->
+<button type="button" onclick="generateContractInfo()">Подписать</button>
+
+<!-- Скрипт для генерации данных договора при нажатии кнопки -->
+<script>
+  function generateContractInfo() {
+    // Получение текущей даты
+    const today = new Date();
+
+    // Генерация даты договора
+    const contractDate = today.toISOString().split('T')[0];
+    document.getElementById('contract-date').value = contractDate;
+
+    // Генерация номера договора (случайным образом)
+    const contractNumber = Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('contract-number').value = contractNumber;
+
+    // Генерация даты окончания полиса (через год после даты договора)
+    const policyEndDate = new Date(today.setFullYear(today.getFullYear() + 1));
+    document.getElementById('policy-end-date').value = policyEndDate.toISOString().split('T')[0];
+
+    // Генерация даты страхового случая (случайным образом в течение года после даты договора)
+    const incidentDate = new Date(contractDate);
+    incidentDate.setDate(contractDate.getDate() + Math.floor(Math.random() * 365));
+    document.getElementById('incident-date').value = incidentDate.toISOString().split('T')[0];
+  }
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Проверка даты страхового случая</title>
+</head>
+<body>
+    <h1>Сообщите нам о страховом случае</h1>
+  <form>
+    <div>
+      <label for="contract-date">Дата договора:</label>
+      <input type="date" id="contract-date">
+    </div>
+    <div>
+      <label for="contract-number">Номер договора:</label>
+      <input type="text" id="contract-number">
+    </div>
+    <div>
+      <label for="incident-date">Дата страхового случая:</label>
+      <input type="date" id="incident-date" onchange="checkDate()">
+    </div>
+    <div>
+      <button type="button" id="submit-button">Проверить</button>
+    </div>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    function checkDate() {
+      const contractDate = new Date(document.getElementById("contract-date").value);
+      const incidentDate = new Date(document.getElementById("incident-date").value);
+
+      // Проверяем, является ли дата страхового случая раньше даты договора
+      if (incidentDate < contractDate) {
+        document.getElementById("result").innerHTML = "Срок полиса не вступил в силу, проверьте правильность заполнения даты";
+        return;
+      }
+
+      // Проверяем, является ли дата страхового случая позже даты договора на срок более года
+      const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
+      if (yearDifference > 1) {
+        document.getElementById("result").innerHTML = "Срок полиса истек, проверьте правильность заполнения даты";
+        return;
+      }
+
+      // Проверяем, является ли дата страхового случая в пределах срока действия договора
+      const daysDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24));
+      if (daysDifference > 365) {
+        document.getElementById("result").innerHTML = "Срок полиса истек, проверьте правильность заполнения даты";
+        return;
+      }
+
+      // Если все проверки пройдены, выводим сообщение "Страховой полис проверен"
+      document.getElementById("result").innerHTML = "Страховой полис проверен";
 function checkDate() {
   const contractDate = new Date(document.getElementById("contract-date").value);
   const incidentDate = new Date(document.getElementById("incident-date").value);
@@ -25,3 +298,24 @@ function checkDate() {
   // Если все проверки пройдены, выводим сообщение "Страховой полис в силе"
   document.getElementById("result").innerHTML = "Страховой полис в силе";
 }
+  </script>
+</body>
+</html>
+  </script>
+</head>
+<body>
+  <form>
+    <label for="name">ФИО:</label>
+    <input type="text" id="name">
+    <br>
+    <label for="phone">Телефон для обратной связи:</label>
+    <input type="tel" id="phone">
+    <br>
+    <label for="policy_number">Номер полиса:</label>
+    <input type="number" id="policy_number">
+    <br>
+    <input type="submit" value="Отправить">
+  </form>
+</body>
+</html>
+
