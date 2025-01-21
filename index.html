@@ -254,15 +254,14 @@
 
       // Проверяем, является ли дата страхового случая раньше даты договора
       if (incidentDate < contractDate) {
-        document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
+        document.getElementById("result").innerHTML = "Дата страхового случая не может быть раньше даты договора";
         return;
       }
 
       // Проверяем, является ли дата страхового случая позже даты договора на срок более года
       const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
-      const monthDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 30));
-      if (yearDifference > 1 || (yearDifference === 1 && monthDifference > 12)) {
-        document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
+      if (yearDifference > 1) {
+        document.getElementById("result").innerHTML = "Дата страхового случая не может быть позже даты договора на срок более года";
         return;
       }
 
