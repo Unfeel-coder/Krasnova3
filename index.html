@@ -258,7 +258,7 @@ contractDateInput.addEventListener("change", () => {
 });
 
 submitButton.addEventListener("click", (event) => {
-  event.preventDefault(); // Отменить отправку формы
+  event.preventDefault(); // Отменить отправку формы по умолчанию
 
   const incidentDate = new Date(incidentDateInput.value);
   const contractDate = new Date(contractDateInput.value);
@@ -272,7 +272,6 @@ submitButton.addEventListener("click", (event) => {
   }
 });
 </script>
-
 
 </div>
     <label for="name">ФИО:</label>
