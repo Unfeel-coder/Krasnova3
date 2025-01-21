@@ -50,4 +50,3 @@ function calculate() {
 
   document.querySelector('#result').innerHTML = Ⓝ<p><b>Стоимость ипотечного страхования: ${result.toFixed(2)} рублей</b></p>Ⓝ;
 }
-
