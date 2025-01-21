@@ -225,55 +225,44 @@
 </head>
 <body>
   <h1>Сообщите нам о страховом случае</h1>
-  <form>
 <form>
-<div>
-  <label for="contract-date">Дата договора:</label>
-  <input type="date" id="contract-date">
-<div>
-  <label for="contract-number">Номер договора:</label>
-  <input type="text" id="contract-number">
-</div>
-    <div>
-  <label for="incident-date">Дата страхового случая:</label>
-  <input type="date" id="incident-date">
-</div>
- <div>
-      <button type="submit" id="submit-button">Проверить</button>
-    </div>
+  <div>
+    <label for="contract-date">Дата договора:</label>
+    <input type="date" id="contract-date">
+  </div>
+  <div>
+    <label for="contract-number">Номер договора:</label>
+    <input type="text" id="contract-number">
+  </div>
+  <div>
+    <label for="incident-date">Дата страхового случая:</label>
+    <input type="date" id="incident-date">
+  </div>
+  <div>
+    <button type="submit" id="submit-button" disabled>Проверить</button>
+  </div>
+</form>
+
 <script>
-const contractDateInput = document.getElementById("contract-date");
-const incidentDateInput = document.getElementById("incident-date");
-const submitButton = document.getElementById("submit-button");
+  const contractDateInput = document.getElementById("contract-date");
+  const incidentDateInput = document.getElementById("incident-date");
+  const submitButton = document.getElementById("submit-button");
 
-contractDateInput.addEventListener("change", () => {
-  const contractDate = new Date(contractDateInput.value);
+  const oneYearInMilliseconds = 31557600000;
 
-  // Установить минимальную допустимую дату для даты страхового случая
-  const minIncidentDate = new Date(contractDate);
-  incidentDateInput.min = minIncidentDate.toISOString().slice(0, 10);
+  incidentDateInput.addEventListener("input", () => {
+    const contractDate = new Date(contractDateInput.value);
+    const incidentDate = new Date(incidentDateInput.value);
 
-  // Установить максимальную допустимую дату для даты страхового случая (один год после даты договора)
-  const maxIncidentDate = new Date(contractDate);
-  maxIncidentDate.setFullYear(maxIncidentDate.getFullYear() + 1);
-  incidentDateInput.max = maxIncidentDate.toISOString().slice(0, 10);
-});
-
-submitButton.addEventListener("click", (event) => {
-  event.preventDefault(); // Отменить отправку формы по умолчанию
-
-  const incidentDate = new Date(incidentDateInput.value);
-  const contractDate = new Date(contractDateInput.value);
-
-  // Проверить, соблюдены ли временные сроки
-  if (incidentDate < contractDate || incidentDate > maxIncidentDate) {
-    alert("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
-  } else {
-    // Выполнить действия по отправке формы (например, отправить данные на сервер)
-    alert("Форма отправлена");
-  }
-});
+    if (incidentDate < contractDate || incidentDate > new Date(contractDate.getTime() + oneYearInMilliseconds)) {
+      submitButton.disabled = true;
+      alert("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
+    } else {
+      submitButton.disabled = false;
+    }
+  });
 </script>
+
 </div>
     <label for="name">ФИО:</label>
     <input type="text" id="name">
