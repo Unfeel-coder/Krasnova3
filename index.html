@@ -244,27 +244,29 @@
 </form>
 
 <script>
-  function checkDate() {
-    const contractDate = new Date(document.getElementById("contract-date").value);
-    const incidentDate = new Date(document.getElementById("incident-date").value);
+document.getElementById("submit-button").addEventListener("click", checkDate);
 
-    // Проверяем, является ли дата страхового случая раньше даты договора
-    if (incidentDate < contractDate) {
-      alert("Срок полиса не вступил в силу, проверьте правильность заполнения даты");
-      return;
-    }
+function checkDate() {
+  const contractDate = new Date(document.getElementById("contract-date").value);
+  const incidentDate = new Date(document.getElementById("incident-date").value);
 
-    // Проверяем, является ли дата страхового случая позже даты договора на срок более года
-    const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
-    if (yearDifference > 1) {
-      alert("Срок полиса истек, проверьте правильность заполнения даты");
-      return;
-    }
-
-    // Если данные корректны, включаем кнопку "Проверить"
-    document.getElementById("submit-button").disabled = false;
-    alert("Страховой полис проверен");
+  // Проверяем, является ли дата страхового случая раньше даты договора
+  if (incidentDate < contractDate) {
+    alert("Срок полиса не вступил в силу, проверьте правильность заполнения даты");
+    return;
   }
+
+  // Проверяем, является ли дата страхового случая позже даты договора на срок более года
+  const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
+  if (yearDifference > 1) {
+    alert("Срок полиса истек, проверьте правильность заполнения даты");
+    return;
+  }
+
+  // Если данные корректны, выводим сообщение "Страховой полис проверен"
+  alert("Страховой полис проверен");
+}
+
 </script>
 
 </div>
