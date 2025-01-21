@@ -239,7 +239,7 @@
     <input type="date" id="incident-date">
   </div>
   <div>
-    <button type="submit" id="submit-button" disabled>Проверить</button>
+    <button type="button" id="submit-button">Проверить</button>
   </div>
 </form>
 
@@ -250,18 +250,19 @@
 
   const oneYearInMilliseconds = 31557600000;
 
-  incidentDateInput.addEventListener("input", () => {
+  submitButton.addEventListener("click", () => {
     const contractDate = new Date(contractDateInput.value);
     const incidentDate = new Date(incidentDateInput.value);
 
     if (incidentDate < contractDate || incidentDate > new Date(contractDate.getTime() + oneYearInMilliseconds)) {
-      submitButton.disabled = true;
       alert("Срок полиса истек или не вступил в силу, проверьте правильность заполнения даты");
     } else {
-      submitButton.disabled = false;
+      // Здесь можно добавить код для проверки страхового случая по номеру договора и дате
+      alert("Страховой случай проверен");
     }
   });
 </script>
+
 
 </div>
     <label for="name">ФИО:</label>
