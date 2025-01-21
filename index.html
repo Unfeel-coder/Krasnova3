@@ -239,9 +239,10 @@
     <input type="date" id="incident-date" onchange="checkDate()">
   </div>
   <div>
-    <button type="button" id="submit-button">Проверить</button>
+   <button type="button" id="submit-button" disabled>Проверить</button>
   </div>
 </form>
+<script>
 <script>
   document.getElementById("submit-button").addEventListener("click", checkDate);
 
@@ -266,6 +267,7 @@
     alert("Страховой полис проверен");
   }
 </script>
+
 </div>
     <label for="name">ФИО:</label>
     <input type="text" id="name">
