@@ -246,26 +246,27 @@
 <div id="result"></div>
 
 <script>
-  function checkDate() {
-    const contractDate = new Date(document.getElementById("contract-date").value);
-    const incidentDate = new Date(document.getElementById("incident-date").value);
+function checkDate() {
+  const contractDate = new Date(document.getElementById("contract-date").value);
+  const incidentDate = new Date(document.getElementById("incident-date").value);
 
-    // Проверяем, является ли дата страхового случая раньше даты договора
-    if (incidentDate < contractDate) {
-      document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
-      return;
-    }
-
-    // Проверяем, является ли дата страхового случая позже даты договора на срок более года
-    const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
-    if (yearDifference > 1) {
-      document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
-      return;
-    }
-
-    // Если данные корректны, выводим сообщение "Полис проверен"
-    document.getElementById("result").innerHTML = "Полис проверен";
+  // Проверяем, является ли дата страхового случая раньше даты договора
+  if (incidentDate < contractDate) {
+    document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
+    return;
   }
+
+  // Проверяем, является ли дата страхового случая позже даты договора на срок более года
+  const yearDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24 * 365));
+  if (yearDifference > 1) {
+    document.getElementById("result").innerHTML = "Дата неверна или полис недействителен";
+    return;
+  }
+
+  // Если данные корректны, выводим сообщение "Полис проверен"
+  document.getElementById("result").innerHTML = "Полис проверен";
+}
+
 </script>
 
 </head>
