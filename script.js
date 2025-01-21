@@ -1,52 +1,62 @@
-function calculate() {
-  const baseRate = parseFloat(document.querySelector('#base-rate').value);
-  const propertyType = document.querySelector('#property-type').value;
-  const propertyCondition = document.querySelector('#property-condition').value;
-  const propertyAge = parseFloat(document.querySelector('#property-age').value);
-  const borrowerAge = parseFloat(document.querySelector('#borrower-age').value);
-  const borrowerGender = document.querySelector('#borrower-gender').value;
+const form = document.querySelector('form');
 
-  let coefficient = 1;
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-  // Тип имущества
-  if (propertyType === 'квартира') {
-    coefficient *= 1;
-  } else if (propertyType === 'дом') {
-    coefficient *= 1;
+  // Получение значений из формы
+  const loanAmount = Number(document.getElementById('loan-amount').value);
+  const propertyType = document.getElementById('property-type').value;
+  const propertyCondition = document.getElementById('property-condition').value;
+  const propertyAge = document.getElementById('property-age').value;
+  const borrowerAge = Number(document.getElementById('borrower-age').value);
+  const borrowerGender = document.getElementById('borrower-gender').value;
+
+  // Определение коэффициентов
+  let propertyTypeCoefficient = 1;
+  if (propertyType === 'дом') {
+    propertyTypeCoefficient = 1;
   }
 
-  // Состояние имущества
+  let propertyConditionCoefficient = 1;
   if (propertyCondition === 'новостройка') {
-    coefficient *= 0.7;
-  } else if (propertyCondition === 'вторичный-фонд') {
-    if (propertyAge >= 25 && propertyAge <= 35) {
-      coefficient *= 1;
-    } else if (propertyAge >= 36 && propertyAge <= 50) {
-      coefficient *= 1.1;
-    } else if (propertyAge >= 51) {
-      coefficient *= 1.2;
+    propertyConditionCoefficient = 0.7;
+  }
+
+  let propertyAgeCoefficient = 1;
+  if (propertyCondition === 'вторичный-фонд') {
+    switch (propertyAge) {
+      case '25-35':
+        propertyAgeCoefficient = 1;
+        break;
+      case '36-50':
+        propertyAgeCoefficient = 1.1;
+        break;
+      case '51+':
+        propertyAgeCoefficient = 1.2;
+        break;
     }
   }
 
-  // Возраст заемщика
+  let borrowerAgeCoefficient = 1;
   if (borrowerAge >= 18 && borrowerAge <= 45) {
-    coefficient *= 0.7;
+    borrowerAgeCoefficient = 0.7;
   } else if (borrowerAge >= 46 && borrowerAge <= 55) {
-    coefficient *= 1;
+    borrowerAgeCoefficient = 1;
   } else if (borrowerAge >= 56 && borrowerAge <= 70) {
-    coefficient *= 1.1;
+    borrowerAgeCoefficient = 1.1;
   } else if (borrowerAge >= 71) {
-    coefficient *= 1.2;
+    borrowerAgeCoefficient = 1.2;
   }
 
-  // Пол заемщика
+  let borrowerGenderCoefficient = 1;
   if (borrowerGender === 'мужчина') {
-    coefficient *= 1.1;
-  } else if (borrowerGender === 'женщина') {
-    coefficient *= 1;
+    borrowerGenderCoefficient = 1.1;
   }
 
-  const result = baseRate * coefficient;
+  // Расчет страховой премии
+  const premium = 0.01 * propertyTypeCoefficient * propertyConditionCoefficient * propertyAgeCoefficient * borrowerAgeCoefficient * borrowerGenderCoefficient * loanAmount;
 
-  document.querySelector('#result').innerHTML = Ⓝ<p><b>Стоимость ипотечного страхования: ${result.toFixed(2)} рублей</b></p>Ⓝ;
-}
+  // Вывод результата
+  const resultElement = document.getElementById('result');
+  resultElement.innerHTML = ⓃСтраховая премия: ${premium.toFixed(2)} рублейⓃ;
+});
