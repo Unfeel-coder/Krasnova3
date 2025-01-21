@@ -245,7 +245,7 @@
   <div id="result"></div>
 
   <script>
-  function checkDate() {
+ function checkDate() {
   const contractDate = new Date(document.getElementById("contract-date").value);
   const incidentDate = new Date(document.getElementById("incident-date").value);
 
@@ -262,7 +262,14 @@
     return;
   }
 
-  // Если данные корректны, выводим сообщение "Страховой полис проверен"
+  // Проверяем, является ли дата страхового случая в пределах срока действия договора
+  const daysDifference = Math.floor((incidentDate - contractDate) / (1000 * 60 * 60 * 24));
+  if (daysDifference > 365) {
+    document.getElementById("result").innerHTML = "Срок полиса истек, проверьте правильность заполнения даты";
+    return;
+  }
+
+  // Если все проверки пройдены, выводим сообщение "Страховой полис проверен"
   document.getElementById("result").innerHTML = "Страховой полис проверен";
 }
 
