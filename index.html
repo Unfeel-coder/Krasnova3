@@ -1,55 +1,199 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Калькулятор ипотечного страхования</title>
-  <style>
-    body {
-      font-size: 16px;
-    }
-
-    #result {
-      display: block;
-    }
-  </style>
-  <script src="script.js"></script>
+  <meta charset="UTF-8">
+  <title>Полис ипотечного страхования</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Калькулятор ипотечного страхования</h1>
-  <form>
-    <label for="loan-amount">Сумма кредита:</label>
-    <input type="number" id="loan-amount">
-    <br>
-    <label for="property-type">Тип имущества:</label>
-    <select id="property-type">
-      <option value="квартира">Квартира</option>
-      <option value="дом">Дом</option>
-    </select>
-    <br>
-    <label for="property-condition">Состояние имущества:</label>
-    <select id="property-condition">
-      <option value="новостройка">Новостройка</option>
-      <option value="вторичный-фонд">Вторичный фонд</option>
-    </select>
-    <br>
-    <label for="property-age">Возраст постройки (для вторичного фонда):</label>
-    <select id="property-age">
-      <option value="25-35">от 25 до 35</option>
-      <option value="36-50">от 36 до 50</option>
-      <option value="51+">от 51</option>
-    </select>
-    <br>
-    <label for="borrower-age">Возраст заемщика:</label>
-    <input type="number" id="borrower-age">
-    <br>
-    <label for="borrower-gender">Пол заемщика:</label>
-    <select id="borrower-gender">
-      <option value="мужчина">Мужчина</option>
-      <option value="женщина">Женщина</option>
-    </select>
-    <br>
-    <input type="submit" value="Рассчитать">
+  <h1>Заполнение полиса ипотечного страхования</h1>
+  <form id="form">
+    <div>
+      <label for="name">ФИО</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+      <h2>Паспортные данные</h2>
+      <div>
+        <label for="passportSeries">Серия</label>
+        <input type="text" id="passportSeries" name="passportSeries" required>
+      </div>
+      <div>
+        <label for="passportNumber">Номер</label>
+        <input type="text" id="passportNumber" name="passportNumber" required>
+      </div>
+      <div>
+        <label for="passportIssuedBy">Кем выдан</label>
+        <input type="text" id="passportIssuedBy" name="passportIssuedBy" required>
+      </div>
+      <div>
+        <label for="passportIssuedDate">Когда выдан</label>
+        <input type="date" id="passportIssuedDate" name="passportIssuedDate" required>
+      </div>
+    </div>
+    <div>
+      <label for="birthDate">Дата рождения</label>
+      <input type="date" id="birthDate" name="birthDate" required>
+    </div>
+    <div>
+      <label for="address">Адрес объекта</label>
+      <input type="text" id="address" name="address" required>
+    </div>
+    <div>
+      <label for="remainingMortgageSum">Оставшаяся сумма ипотеки</label>
+      <input type="number" id="remainingMortgageSum" name="remainingMortgageSum" required>
+    </div>
+    <div>
+      <label for="termRepayment">Оставшийся срок кредита</label>
+      <input type="number" id="termRepayment" name="termRepayment" required>
+    </div>
+    <div>
+      <label for="housingType">Тип жилья</label>
+      <select id="housingType" name="housingType" required>
+        <option value="apartment">Квартира</option>
+        <option value="house">Дом</option>
+      </select>
+    </div>
+    <div>
+      <label for="cadastralNumber">Кадастровый номер</label>
+      <input type="text" id="cadastralNumber" name="cadastralNumber" required>
+    </div>
+    <div>
+      <label for="gender">Пол страхователя</label>
+      <select id="gender" name="gender" required>
+        <option value="male">Мужчина</option>
+        <option value="female">Женщина</option>
+      </select>
+        <div>
+      <button type="submit" id="submit-button">Подпись</button>
+    </div>
   </form>
-  <br>
-  <div id="result"></div>
+    </div>
+    <h2 id="calculation">Расчет суммы страхования</h2>
+    <div>
+      <label for="insuranceSum">Сумма страхования</label>
+      <input type="number" id="insuranceSum" name="insuranceSum" disabled>
+    </div>
+    <div>
+      <label for="insurancePremium">Страховая премия</label>
+      <input type="number" id="insurancePremium" name="insurancePremium" disabled>
+    </div>
+  </form>
+  <script>
+    // Получение элементов формы
+    const form = document.getElementById('form');
+    const nameInput = document.getElementById('name');
+    const passportSeriesInput = document.getElementById('passportSeries');
+    const passportNumberInput = document.getElementById('passportNumber');
+    const passportIssuedByInput = document.getElementById('passportIssuedBy');
+    const passportIssuedDateInput = document.getElementById('passportIssuedDate');
+    const birthDateInput = document.getElementById('birthDate');
+    const addressInput = document.getElementById('address');
+    const remainingMortgageSumInput = document.getElementById('remainingMortgageSum');
+    const termRepaymentInput = document.getElementById('termRepayment');
+    const housingTypeSelect = document.getElementById('housingType');
+    const cadastralNumberInput = document.getElementById('cadastralNumber');
+    const genderSelect = document.getElementById('gender');
+    const submitButton = document.getElementById('submit-button');
+
+    // Получение элементов расчета
+    const insuranceSumInput = document.getElementById('insuranceSum');
+    const insurancePremiumInput = document.getElementById('insurancePremium');
+
+    //Обработчик события отправки формы
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Проверка на заполнение формы
+      if (!validateForm()) {
+        alert('Пожалуйста, заполните все поля формы.');
+        return;
+      }
+
+      // Получение данных из формы
+      const data = {
+        name: nameInput.value,
+        passportSeries: passportSeriesInput.value,
+        passportNumber: passportNumberInput.value,
+        passportIssuedBy: passportIssuedByInput.value,
+        passportIssuedDate: passportIssuedDateInput.value,
+        birthDate: birthDateInput.value,
+        address: addressInput.value,
+        remainingMortgageSum: remainingMortgageSumInput.value,
+        termRepayment: termRepaymentInput.value,
+        housingType: housingTypeSelect.value,
+        cadastralNumber: cadastralNumberInput.value,
+        gender: genderSelect.value
+      };
+
+      // Расчет суммы страхования
+      const insuranceSum = calculateInsuranceSum(data);
+      insuranceSumInput.value = insuranceSum;
+
+      // Расчет страховой премии
+      const insurancePremium = calculateInsurancePremium(data, insuranceSum);
+      insurancePremiumInput.value = insurancePremium;
+    });
+
+    // Функция проверки заполнения формы
+    function validateForm() {
+      return nameInput.value &&
+        passportSeriesInput.value &&
+        passportNumberInput.value &&
+        passportIssuedByInput.value &&
+        passportIssuedDateInput.value &&
+        birthDateInput.value &&
+        addressInput.value &&
+        remainingMortgageSumInput.value &&
+        termRepaymentInput.value &&
+        housingTypeSelect.value &&
+        cadastralNumberInput.value &&
+        genderSelect.value;
+    }
+
+    // Функция расчета суммы страхования
+    function calculateInsuranceSum(data) {
+      let sum = data.remainingMortgageSum;
+
+      if (data.housingType === 'house') {
+        sum *= 1.2;
+      }
+
+      return sum;
+    }
+
+    // Функция расчета страховой премии
+    function calculateInsurancePremium(data, insuranceSum) {
+      let premium = insuranceSum * 0.009;
+
+      if (data.gender === 'female') {
+        premium *= 0.9;
+      }
+
+      return premium;
+    }
+  </script>
 </body>
 </html>
+
+<html>
+<head>
+  <title>Сообщите нам о страховом случае</title>
+</head>
+<body>
+  <h1>Сообщите нам о страховом случае</h1>
+  <form>
+    <label for="name">ФИО:</label>
+    <input type="text" id="name">
+    <br>
+    <label for="phone">Телефон для обратной связи:</label>
+    <input type="tel" id="phone">
+    <br>
+    <label for="policy_number">Номер полиса:</label>
+    <input type="number" id="policy_number">
+    <br>
+    <input type="submit" value="Отправить">
+  </form>
+</body>
+</html>
+
